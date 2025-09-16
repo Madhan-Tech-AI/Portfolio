@@ -47,6 +47,39 @@ const projects: Project[] = [
     repoUrl: 'https://github.com/Madhan2407/AICHATBOT',
     demoUrl: 'https://github.com/Madhan2407/AICHATBOT',
     category: 'AI/ML'
+  },
+  {
+    id: 4,
+    title: 'LMS APP',
+    description: 'Comprehensive Learning Management System for educational institutions.',
+    detail: 'A full-featured Learning Management System designed for educational institutions, providing course management, student enrollment, assignment tracking, grade management, and interactive learning tools for enhanced educational experience.',
+    techTags: ['React', 'Node.js', 'Database Management', 'Responsive Web Design'],
+    imageUrl: 'https://images.pexels.com/photos/5428836/pexels-photo-5428836.jpeg?auto=compress&cs=tinysrgb&w=600',
+    repoUrl: 'https://github.com/Madhan-Tech-AI/GOJAN-LMS-APP',
+    demoUrl: 'https://github.com/Madhan-Tech-AI/GOJAN-LMS-APP',
+    category: 'Web Development'
+  },
+  {
+    id: 5,
+    title: 'College Admission and Appointment Booking App',
+    description: 'Streamlined college admission and appointment scheduling platform.',
+    detail: 'A comprehensive platform for college admissions and appointment booking, featuring application management, document upload, interview scheduling, real-time status tracking, and automated notifications for a seamless admission process.',
+    techTags: ['React', 'Appointment System', 'Database Management', 'User Management'],
+    imageUrl: 'https://images.pexels.com/photos/5940721/pexels-photo-5940721.jpeg?auto=compress&cs=tinysrgb&w=600',
+    repoUrl: 'https://github.com/Madhan-Tech-AI/Gojan-AD',
+    demoUrl: 'https://github.com/Madhan-Tech-AI/Gojan-AD',
+    category: 'Web Development'
+  },
+  {
+    id: 6,
+    title: 'Craftique (Resume and Portfolio Builder)',
+    description: 'Smart resume and portfolio builder for students and professionals.',
+    detail: 'An intelligent resume and portfolio builder that allows students and professionals to create stunning resumes and portfolios by simply filling in their details. Features smart templates, real-time preview, export options, and AI-powered suggestions for content optimization.',
+    techTags: ['React', 'Template Engine', 'PDF Generation', 'AI Tools'],
+    imageUrl: 'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=600',
+    repoUrl: 'https://github.com/Madhan-Tech-AI/Craftique---RESUME-PORTFOLIO-BUILDER',
+    demoUrl: 'https://github.com/Madhan-Tech-AI/Craftique---RESUME-PORTFOLIO-BUILDER',
+    category: 'Web Development'
   }
 ];
 

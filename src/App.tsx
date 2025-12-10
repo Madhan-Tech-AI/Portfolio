@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Experience from './components/Experience';
-import Education from './components/Education';
-import Achievements from './components/Achievements';
-import Certifications from './components/Certifications';
-import Languages from './components/Languages';
-import Contact from './components/Contact';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import ScrollToTop from './components/ScrollToTop';
+import ScrollProgress from './components/ScrollProgress';
+import FloatingContact from './components/FloatingContact';
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'education', 'certifications', 'contact'];
+      const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'education', 'certifications', 'achievements', 'languages', 'contact'];
       const currentSection = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -25,7 +20,7 @@ function App() {
         }
         return false;
       });
-      
+
       if (currentSection) {
         setActiveSection(currentSection);
       }
@@ -36,21 +31,21 @@ function App() {
   }, []);
 
   return (
-      <div className="min-h-screen bg-white transition-colors duration-300">
-        <Header activeSection={activeSection} />
+    <Router>
+      <div className="min-h-screen bg-white dark:bg-dark transition-colors duration-300">
+        <ScrollProgress />
+        <ScrollToTop />
+        <Navbar activeSection={activeSection} />
+
         <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Education />
-          <Achievements />
-          <Certifications />
-          <Languages />
-          <Contact />
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
         </main>
+
+        <FloatingContact />
       </div>
+    </Router>
   );
 }
 

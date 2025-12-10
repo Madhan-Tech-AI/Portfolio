@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 const AnimatedText: React.FC = () => {
   const texts = [
-    'Financial Manager & Co-Founder of Hive5',
-    'Developer & Co-ordinator of Unai Tech',
+    'AI and Full Stack Developer at Story Seed Studio',
+    'Developer & Co-ordinator at Unai Tech',
     'Artificial Intelligence and Data Science Enthusiast'
   ];
 
@@ -13,7 +13,7 @@ const AnimatedText: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible(false);
-      
+
       setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
         setIsVisible(true);
@@ -25,9 +25,8 @@ const AnimatedText: React.FC = () => {
 
   return (
     <span
-      className={`transition-opacity duration-500 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
+      className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
     >
       {texts[currentIndex]}
     </span>

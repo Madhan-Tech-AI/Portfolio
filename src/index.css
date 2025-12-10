@@ -1,14 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure proper theme initialization */
-:root {
-  color-scheme: light;
-}
-
-:root.dark {
-  color-scheme: dark;
+@layer base {
+  body {
+    @apply font-sans bg-light text-dark dark:bg-dark dark:text-light transition-colors duration-300;
+  }
 }
 
 /* Custom animations */
@@ -41,6 +40,17 @@
   }
 }
 
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Waves component styles */
 .waves {
   position: absolute;
@@ -60,7 +70,7 @@
   left: 0;
   width: 0.5rem;
   height: 0.5rem;
-  background: rgba(79, 70, 229, 0.3);
+  background: rgba(108, 99, 255, 0.3);
   border-radius: 50%;
   transform: translate3d(calc(var(--x, 0px) - 0.25rem), calc(var(--y, 0px) - 0.25rem), 0);
   will-change: transform;
@@ -132,7 +142,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-light dark:bg-dark-light;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -160,7 +170,20 @@ html {
 
 /* Focus styles */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-dark;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: rgba(27, 27, 29, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Mobile-specific improvements */

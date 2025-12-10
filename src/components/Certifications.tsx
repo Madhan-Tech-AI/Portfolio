@@ -1,7 +1,9 @@
-import React from 'react';
-import { AlignCenterVertical as Certificate, ExternalLink, Calendar } from 'lucide-react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React, { useState } from 'react';
+import { AlignCenterVertical as Certificate, ExternalLink, Calendar, Award } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Modal from './Modal';
 
+// Mock data enriched with images for demo (using placeholders if real images aren't available yet)
 const certifications = [
   {
     title: 'UI/UX Design',
@@ -9,15 +11,29 @@ const certifications = [
     type: 'Course Completion',
     date: '2024',
     skills: ['UI/UX Design', 'User Research', 'Prototyping'],
-    certificateUrl: 'https://drive.google.com/file/d/1UWphdDanx5usL49tRBxHHg57GFCO54ln/view?usp=sharing'
+    certificateUrl: 'https://drive.google.com/file/d/1UWphdDanx5usL49tRBxHHg57GFCO54ln/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg',
+    descriptionPoints: [
+      'Mastered user-centered design principles.',
+      'Completed multiple hands-on projects involving prototyping.',
+      'Learned about user research and usability testing methodologies.'
+    ],
+    quote: "Design is not just what it looks like and feels like. Design is how it works."
   },
   {
     title: 'Basics of Python',
     provider: 'Infosys Springboard',
     type: 'Certificate',
     date: '2024',
-      skills: ['Python', 'Programming Fundamentals'],
-    certificateUrl: 'https://drive.google.com/file/d/19qTooIaCICzMZ-TgOzANuJ9gzm0JGskm/view?usp=sharing'
+    skills: ['Python', 'Programming Fundamentals'],
+    certificateUrl: 'https://drive.google.com/file/d/19qTooIaCICzMZ-TgOzANuJ9gzm0JGskm/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg',
+    descriptionPoints: [
+      'Learned core Python syntax and data structures.',
+      'Developed basic scripts to automate tasks.',
+      'Understood object-oriented programming concepts.'
+    ],
+    quote: "The joy of coding Python should be in seeing short, concise, readable classes that express a lot of action in a small amount of clear code."
   },
   {
     title: 'Global Startup Club',
@@ -25,228 +41,268 @@ const certifications = [
     type: 'Membership',
     date: 'Active',
     skills: ['Entrepreneurship', 'Networking', 'Business Development'],
-    
+    descriptionPoints: [
+      'Engaged with a community of entrepreneurs.',
+      'Participated in workshops on business strategy.',
+      'Networking with industry leaders and mentors.'
+    ],
+    image: 'https://static.wixstatic.com/media/c7c940_2ffb94816dd54b118bb96783f5ccec85~mv2.jpg/v1/crop/x_0,y_58,w_840,h_343/fill/w_470,h_192,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/GSS%20Logo%20%26%20Delhi%20Summit%20Logos%20%20(1280%20x%20640%20px)_pdf%20(3).jpg',
+    quote: "Innovation distinguishes between a leader and a follower."
   }
 ];
 
 const virtualExperiences = [
   {
-    title: 'AWS APAC Solutions Architecture Virtual Experience Program on Forage',
+    title: 'AWS APAC Solutions Architecture',
     provider: 'Forage',
     date: 'August 2025',
-    description: 'Designed a simple and scalable hosting architecture based on Elastic Beanstalk for a client experiencing significant growth and slow response times. Described the proposed architecture in plain language ensuring the client understood how it works and how costs will be calculated.',
-    skills: ['AWS Elastic Beanstalk', 'Architecture Design', 'Cost Optimization', 'Client Communication', 'Scalable Solutions'],
-    certificateUrl: 'https://drive.google.com/file/d/1ZHKEYH7itTvgJ5Pc74b129baGvEpJkGV/view?usp=sharing'
+    descriptionPoints: [
+      'Designed a scalable hosting architecture.',
+      'Utilized AWS Elastic Beanstalk for deployment.',
+      'Learned best practices for cloud infrastructure.'
+    ],
+    skills: ['AWS', 'Architecture Design', 'Cloud'],
+    certificateUrl: 'https://drive.google.com/file/d/1ZHKEYH7itTvgJ5Pc74b129baGvEpJkGV/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+    quote: "Cloud computing is not only the future of IT, but the present."
   },
   {
-    title: 'Accenture UK Developer and Technology Virtual Experience Programme on Forage',
+    title: 'Accenture Developer Programme',
     provider: 'Forage',
     date: 'August 2025',
-    description: 'Completed Developer and Technology Job Simulation with end-to-end SDLC understanding. Researched DevOps trends, compared Agile vs Waterfall methodologies, designed algorithms with flow diagrams, and debugged Python code.',
-    skills: ['SDLC', 'DevOps', 'Agile', 'Waterfall', 'Algorithm Design', 'Python Debugging', 'Research & Analysis'],
-    certificateUrl: 'https://drive.google.com/file/d/1kO9-0NKIL3aIiZIbwn7YQ7YToRpX8sku/view?usp=sharing'
+    descriptionPoints: [
+      'Researched current DevOps trends and tools.',
+      'Compared Agile vs Waterfall methodologies.',
+      'Debugged and optimized Python code snippets.'
+    ],
+    skills: ['SDLC', 'DevOps', 'Agile'],
+    certificateUrl: 'https://drive.google.com/file/d/1kO9-0NKIL3aIiZIbwn7YQ7YToRpX8sku/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg',
+    quote: "Continuous improvement is better than delayed perfection."
   },
   {
     title: 'Python 101 for Data Science',
-    provider: 'IBM / CognitiveClass.ai',
+    provider: 'IBM',
     date: 'Dec 8, 2024',
-    description: 'Learned Python fundamentals for data science applications. Covered data analysis, visualization, and statistical techniques.',
+    descriptionPoints: [
+      'Fundamentals of Python for data analysis.',
+      'Allocating data types and structures.',
+      'Introduction to Pandas and NumPy.'
+    ],
+    skills: ['Python', 'Data Science'],
     certificateUrl: 'https://drive.google.com/file/d/1mF6e0pu0FJfLqLzsp8O1nTzBWZSEcjLo/view?usp=sharing',
-    skills: ['Python', 'Data Science', 'Data Analysis', 'Visualization']
+    image: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg',
+    quote: "Data is the new oil."
   },
   {
     title: 'Career Essentials in Generative AI',
-    provider: 'Microsoft & LinkedIn',
+    provider: 'Microsoft',
     date: 'Dec 13, 2024',
-    description: 'Learned AI applications, ethics, and practical generative AI use cases.',
-    skills: ['Computer Ethics', 'Artificial Intelligence', 'Generative AI'],
-    certificateUrl: 'https://drive.google.com/file/d/1VSUoRCQom55BWz1RXuCVCKkpRjucSZZB/view?usp=sharing'
+    descriptionPoints: [
+      'Explored applications of Generative AI.',
+      'Discussed ethical considerations in AI.',
+      'Learned about prompt engineering techniques.'
+    ],
+    skills: ['AI', 'Ethics', 'GenAI'],
+    certificateUrl: 'https://drive.google.com/file/d/1VSUoRCQom55BWz1RXuCVCKkpRjucSZZB/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg',
+    quote: "AI will not replace you. A person using AI will."
   },
   {
-    title: 'Basics of Python',
-    provider: 'UniAthena / Cambridge International Qualifications',
-    date: 'Oct 14, 2024',
-    description: 'Covered Python basics for software development.',
-    skills: ['Python', 'Programming Fundamentals'],
-    certificateUrl: 'https://drive.google.com/file/d/1HSHBvHAgTTL-yb-2wbHxcxtTwU0m8-N1/view?usp=sharing'
-  },
-  {
-    title: 'Deloitte Australia Data Analytics Job Simulation on Forage',
+    title: 'Deloitte Data Analytics',
     provider: 'Forage',
     date: 'August 2025',
-    description: 'Completed a Deloitte job simulation involving data analysis and forensic technology. Created a data dashboard using Tableau. Used Excel to classify data and draw business conclusions.',
-    skills: ['Data Analysis', 'Forensic Technology', 'Tableau', 'Excel', 'Data Classification', 'Business Intelligence'],
-    certificateUrl: 'https://drive.google.com/file/d/11G4rmstRcqg4AI9f4NJL6vGWj3EVB1tK/view?usp=sharing'
+    descriptionPoints: [
+      'Completed a comprehensive job simulation.',
+      'Analyzed datasets to find actionable insights.',
+      'Visualized data using Tableau and Excel.'
+    ],
+    skills: ['Data Analysis', 'Tableau', 'Excel'],
+    certificateUrl: 'https://drive.google.com/file/d/11G4rmstRcqg4AI9f4NJL6vGWj3EVB1tK/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Logo_of_Deloitte.svg/500px-Logo_of_Deloitte.svg.png',
+    quote: "Without data, you're just another person with an opinion."
   },
   {
-    title: 'EC-Council Virtual Experience Program',
-    provider: 'EC-Council',
-    date: '2024',
-    description: 'Participated in cybersecurity-focused virtual experience covering ethical hacking, network security, and information security best practices.',
-    skills: ['Cybersecurity', 'Ethical Hacking', 'Network Security', 'Information Security'],
-    certificateUrl: 'https://drive.google.com/file/d/1LVKnzWAKHy4M3kZDMBoIoKt6wblr3eYC/view?usp=sharing'
-  },
-  {
-    title: 'Google Virtual Experience Program',
+    title: 'Google Virtual Experience',
     provider: 'Google',
     date: '2024',
-    description: 'Explored Google\'s technology ecosystem, cloud services, and digital innovation through hands-on virtual projects and learning modules.',
-    skills: ['Google Cloud', 'Digital Innovation', 'Technology Solutions', 'Cloud Computing'],
-    certificateUrl: 'https://drive.google.com/file/d/1ULRO7VlfKP3xY1nNrTXNzxGXEnH7bdB8/view?usp=sharing'
+    descriptionPoints: [
+      'Explored Google Cloud Platform services.',
+      'Understood the basics of cloud security.',
+      'Learned about digital transformation strategies.'
+    ],
+    skills: ['Google Cloud', 'Digital Innovation'],
+    certificateUrl: 'https://drive.google.com/file/d/1ULRO7VlfKP3xY1nNrTXNzxGXEnH7bdB8/view?usp=sharing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg',
+    quote: "Focus on the user and all else will follow."
   }
 ];
 
 const Certifications: React.FC = () => {
-  const { ref, isVisible } = useScrollAnimation();
+  const [selectedCert, setSelectedCert] = useState<any>(null);
+
+  const getEmbedUrl = (url?: string) => {
+    if (!url) return null;
+    if (url.includes('drive.google.com')) {
+      return url.replace('/view?usp=sharing', '/preview');
+    }
+    return url;
+  };
 
   return (
-    <section id="certifications" className="py-20 bg-white dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          ref={ref}
-          className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
+    <section id="certifications" className="py-20 bg-white dark:bg-dark min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Certifications & Virtual Experiences
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-indigo-600 to-teal-600 mx-auto rounded-full"></div>
-          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-dark dark:text-white mb-4">
+            Certifications & Achievements
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">
+            Showcasing continuous learning and professional milestones.
+          </p>
+        </motion.div>
 
-          {/* Certifications */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8 text-center">
-              Certifications
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              {certifications.map((cert, index) => (
-                <div
-                  key={index}
-                  className={`
-                    bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-lg
-                    transform transition-all duration-300 hover:-translate-y-1
-                    animate-fade-in-up
-                  `}
-                  style={{
-                    animationDelay: `${index * 200}ms`
-                  }}
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Certificate className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-gray-900 dark:text-white mb-1">
-                        {cert.title}
-                      </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                        {cert.provider}
-                      </p>
-                      <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-500 mb-3">
-                        <Calendar className="w-3 h-3" />
-                        <span>{cert.date}</span>
-                        <span>•</span>
-                        <span>{cert.type}</span>
-                      </div>
-                      <div className="flex flex-wrap gap-1">
-                        {cert.skills.map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs rounded-full"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      {cert.certificateUrl && (
-                        <div className="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
-                          <a
-                            href={cert.certificateUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium text-sm transition-colors"
-                          >
-                            <span>Verify Certificate</span>
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </div>
-                      )}
-                    </div>
+        {/* Combined Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...certifications, ...virtualExperiences].map((cert, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ y: -10 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              onClick={() => setSelectedCert(cert)}
+              className="bg-gray-50 dark:bg-dark-light rounded-xl overflow-hidden shadow-lg cursor-pointer group border border-gray-100 dark:border-gray-800"
+            >
+              <div className="h-48 bg-white relative overflow-hidden flex items-center justify-center p-6 border-b border-gray-100 dark:border-gray-700">
+                {/* Logo or Fallback */}
+                {(cert as any).image ? (
+                  <img
+                    src={(cert as any).image}
+                    alt={cert.provider}
+                    className="w-4/5 h-4/5 object-contain transition-transform duration-500 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600">
+                    <Certificate className="w-16 h-16 text-white/80 group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                )}
+
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
+                  <span className="px-4 py-2 bg-white/90 text-primary rounded-full font-medium text-sm shadow-sm transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                    View Certificate
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+                    {cert.provider}
+                  </span>
+                  <div className="flex items-center text-gray-400 text-xs">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    {cert.date}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Virtual Experiences */}
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8 text-center">
-              Virtual Experience Programs
-            </h3>
-            <div className="space-y-6">
-              {virtualExperiences.map((exp, index) => (
-                <div
-                  key={index}
-                  className={`
-                    bg-gray-50 dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg
-                    transform transition-all duration-300 hover:-translate-y-1
-                    animate-fade-in-up
-                  `}
-                  style={{
-                    animationDelay: `${index * 200}ms`
-                  }}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
-                    <div className="flex-1">
-                      <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">
-                        {exp.title}
-                      </h4>
-                      <div className="flex items-center space-x-2 text-teal-600 dark:text-teal-400 mb-2">
-                        <span className="font-semibold">{exp.provider}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-500">
-                      <Calendar className="w-4 h-4" />
-                      <span>{exp.date}</span>
-                    </div>
-                  </div>
+                <h3 className="text-lg font-bold text-dark dark:text-white mb-2 line-clamp-1 group-hover:text-primary transition-colors">
+                  {cert.title}
+                </h3>
 
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                    {exp.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {exp.skills.map((skill, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-sm rounded-full"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  {exp.certificateUrl && (
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <a
-                        href={exp.certificateUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium text-sm transition-colors"
-                      >
-                        <span>Verify Certificate</span>
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    </div>
-                  )}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {cert.skills.slice(0, 3).map((skill, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 bg-white dark:bg-dark text-xs text-gray-600 dark:text-gray-300 rounded border border-gray-200 dark:border-gray-700"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Render Modal */}
+        {selectedCert && (
+          <Modal
+            isOpen={!!selectedCert}
+            onClose={() => setSelectedCert(null)}
+            title=""
+            quote=""
+          >
+            <div className="flex flex-col items-center w-full">
+              {/* Centered Heading */}
+              <h3 className="text-2xl font-bold text-dark dark:text-white mb-2 text-center">
+                CERTIFICATE
+              </h3>
+
+              {/* Centered Quote */}
+              <div className="mb-6 text-center italic text-gray-500 font-medium px-4 border-l-4 border-primary/30 pl-4 py-1">
+                "{selectedCert.quote || 'Learning is a treasure that will follow its owner everywhere.'}"
+              </div>
+
+              {/* Embed Placeholder/Iframe */}
+              <div className="w-full aspect-[4/3] max-w-3xl mx-auto bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden mb-6 border border-gray-200 dark:border-gray-700 relative">
+                {selectedCert.certificateUrl ? (
+                  <iframe
+                    src={getEmbedUrl(selectedCert.certificateUrl) ?? undefined}
+                    className="w-full h-full"
+                    title="Certificate Preview"
+                    allow="autoplay"
+                  ></iframe>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                    <Award className="w-16 h-16 mb-2 opacity-50" />
+                    <span>Certificate Preview Unavailable</span>
+                  </div>
+                )}
+              </div>
+
+              {/* 3 Point Description */}
+              <div className="w-full bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg mb-6">
+                <h4 className="text-sm font-semibold text-dark dark:text-white mb-2 uppercase tracking-wide">Key Takeaways</h4>
+                <ul className="space-y-2">
+                  {selectedCert.descriptionPoints ? (
+                    selectedCert.descriptionPoints.map((point: string, idx: number) => (
+                      <li key={idx} className="text-sm text-gray-600 dark:text-gray-400 flex items-start">
+                        <span className="mr-2 text-primary">•</span>
+                        {point}
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-start"><span className="mr-2 text-primary">•</span> Completed comprehensive training in {selectedCert.title}.</li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-start"><span className="mr-2 text-primary">•</span> Gained hands-on experience through practical exercises.</li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-start"><span className="mr-2 text-primary">•</span> Demonstrated proficiency in key subject areas.</li>
+                    </>
+                  )}
+                </ul>
+              </div>
+
+              {selectedCert.certificateUrl && (
+                <a
+                  href={selectedCert.certificateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors shadow-lg shadow-primary/30 w-full justify-center sm:w-auto"
+                >
+                  <span>Verify Original</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+          </Modal>
+        )}
       </div>
     </section>
   );

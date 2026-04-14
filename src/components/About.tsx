@@ -1,75 +1,96 @@
 import React from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import Waves from './Waves';
+import { motion } from 'framer-motion';
+import SectionDivider from './SectionDivider';
 
 const About: React.FC = () => {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
-    <section id="about" className="py-20 bg-white dark:bg-gray-900">
-      {/* Subtle Waves Background */}
-      <Waves
-        lineColor="rgba(79, 70, 229, 0.04)"
-        backgroundColor="transparent"
-        waveSpeedX={0.008}
-        waveSpeedY={0.005}
-        waveAmpX={15}
-        waveAmpY={10}
-        friction={0.95}
-        tension={0.005}
-        maxCursorMove={50}
-        xGap={20}
-        yGap={50}
-      />
-      
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          ref={ref}
-          className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
+    <section id="about" className="bg-light relative pb-20 lg:pb-32">
+      <SectionDivider number="01" title="About The Engineer" />
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        {/* Responsive Heading spanning full width to push content uniformly */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mb-16 lg:mb-24"
         >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              About Me
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-indigo-600 to-teal-600 mx-auto rounded-full"></div>
+          <h2 className="text-5xl sm:text-6xl font-serif font-bold text-dark tracking-tight leading-none mb-6">
+            Beyond<br />the <span className="text-primary italic">Code.</span>
+          </h2>
+          <div className="w-12 h-px bg-primary/40"></div>
+        </motion.div>
+
+        {/* Content aligned via Grid & Flexbox */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+
+          {/* Left Column: Image Area */}
+          <div className="lg:col-span-5 flex flex-col justify-start">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="relative w-full aspect-[3/4] hidden lg:block group">
+                {/* Soft glow that appears on hover */}
+                <div className="absolute inset-0 translate-x-4 translate-y-4 bg-primary/20 rounded-[3rem] blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"></div>
+
+                {/* Structural Backdrop (Rotated) */}
+                <div className="absolute inset-0 bg-dark/5 rounded-[2rem] border border-dark/10 transform -rotate-3 group-hover:rotate-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-none"></div>
+
+                {/* Crisp Image Container */}
+                <div className="absolute inset-0 overflow-hidden rounded-[2rem] bg-dark/5 shadow-2xl transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2 group-hover:translate-x-2">
+                  <img
+                    src="/WhatsApp Image 2026-04-14 at 2.42.41 PM (1).jpeg"
+                    alt="Developer Portrait"
+                    className="w-full h-full object-cover grayscale mix-blend-multiply opacity-90 transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 origin-center"
+                  />
+                  {/* Delicate inner lighting rim */}
+                  <div className="absolute inset-0 rounded-[2rem] border border-white/40 pointer-events-none mix-blend-overlay"></div>
+                </div>
+              </div>
+
+              {/* Mobile Image Layer */}
+              <div className="w-full aspect-video overflow-hidden rounded-3xl border border-dark/10 shadow-xl lg:hidden block">
+                <img src="/WhatsApp Image 2026-04-14 at 2.42.41 PM (1).jpeg" alt="Developer Portrait" className="w-full h-full object-cover grayscale mix-blend-multiply opacity-90" />
+              </div>
+            </motion.div>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 sm:p-12">
-            <div className="prose prose-lg dark:prose-invert mx-auto">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+          {/* Right Column: Text & Metrics aligned dynamically */}
+          <div className="lg:col-span-7 flex flex-col justify-start space-y-12 lg:space-y-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="text-dark/80 leading-relaxed text-lg sm:text-2xl"
+              style={{ fontFamily: "'Anthela', serif" }}
+            >
+              <p className="first-letter:text-7xl lg:first-letter:text-8xl first-letter:font-serif first-letter:text-primary first-letter:mr-4 first-letter:float-left first-letter:leading-[0.8] mb-8">
                 Passionate Web Developer with a B.Tech in Artificial Intelligence and Data Science and 1 year of experience at UNAI Tech. Skilled in delivering responsive, scalable, and AI-powered web solutions.
               </p>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Seeking to apply my web development and AI expertise to create innovative, user-friendly products in a growth-driven company.
+              <p>
+                Seeking to apply my web development and AI expertise to create innovative, user-friendly products in a growth-driven company. I bridge the gap between deep technical implementation and high-level, human-centric visual design.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <div className="text-center p-6 bg-white dark:bg-gray-700 rounded-xl shadow-sm">
-                <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">1+</span>
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Years Experience</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Professional development</p>
-              </div>
-              <div className="text-center p-6 bg-white dark:bg-gray-700 rounded-xl shadow-sm">
-                <div className="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-teal-600 dark:text-teal-400">10+</span>
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Projects Completed</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Web & AI solutions</p>
-              </div>
-              <div className="text-center p-6 bg-white dark:bg-gray-700 rounded-xl shadow-sm">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">5+</span>
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Certifications</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Technical expertise</p>
-              </div>
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 border-t border-dark/10 pt-12 gap-8 lg:gap-12">
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+                <span className="block text-4xl sm:text-5xl font-serif text-primary mb-2 sm:mb-3">2+</span>
+                <span className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-dark/50 font-bold">Years Experience</span>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+                <span className="block text-4xl sm:text-5xl font-serif text-primary mb-2 sm:mb-3">10+</span>
+                <span className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-dark/50 font-bold">Projects Built</span>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="col-span-2 md:col-span-1 border-t md:border-t-0 border-dark/10 pt-8 md:pt-0">
+                <span className="block text-4xl sm:text-5xl font-serif text-primary mb-2 sm:mb-3">5+</span>
+                <span className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-dark/50 font-bold">Certifications</span>
+              </motion.div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

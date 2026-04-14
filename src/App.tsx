@@ -5,9 +5,20 @@ import Home from './pages/Home';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollProgress from './components/ScrollProgress';
 import FloatingContact from './components/FloatingContact';
+import Preloader from './components/Preloader';
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
+  const [introDone, setIntroDone] = useState(false);
+
+  useEffect(() => {
+    if (!introDone) {
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [introDone]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +43,8 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-white dark:bg-dark transition-colors duration-300">
+      {!introDone && <Preloader onComplete={() => setIntroDone(true)} />}
+      <div className="min-h-screen bg-white transition-colors duration-300">
         <ScrollProgress />
         <ScrollToTop />
         <Navbar activeSection={activeSection} />

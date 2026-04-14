@@ -1,75 +1,61 @@
 import React from 'react';
 import { Trophy, Award } from 'lucide-react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
 
 const achievements = [
   {
-    title: 'Startup Winner – 1st place at BizCanvas 2025',
-    description: 'First place winner in startup competition',
+    title: 'Startup Winner – BizCanvas 2025',
+    description: 'First place winner in startup competition validating innovative business strategies.',
     icon: Trophy,
-    color: 'text-yellow-600 dark:text-yellow-400',
-    bgColor: 'bg-yellow-100 dark:bg-yellow-900/30'
   },
   {
-    title: 'Symposium Winner – TRIDENT\'25',
-    description: 'Winner for innovation, startup strategy, and tech presentation excellence',
+    title: "Symposium Winner – TRIDENT '25",
+    description: 'Awarded for innovation, startup strategy, and technical presentation excellence.',
     icon: Award,
-    color: 'text-purple-600 dark:text-purple-400',
-    bgColor: 'bg-purple-100 dark:bg-purple-900/30'
   }
 ];
 
 const Achievements: React.FC = () => {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
-    <section className="py-12 bg-gray-50 dark:bg-gray-800">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          ref={ref}
-          className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
+    <section className="py-20 bg-light border-y border-dark/5">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-100px" }}
+           className="mb-16"
         >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Achievements
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-indigo-600 to-teal-600 mx-auto rounded-full"></div>
-          </div>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-dark tracking-tight leading-none mb-6">
+            Honors & Awards<span className="text-primary">.</span>
+          </h2>
+          <div className="w-12 h-px bg-primary/40"></div>
+        </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {achievements.map((achievement, index) => {
-              const IconComponent = achievement.icon;
-              return (
-                <div
-                  key={index}
-                  className={`
-                    bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm hover:shadow-lg
-                    transform transition-all duration-300 hover:-translate-y-1
-                    animate-fade-in-up
-                  `}
-                  style={{
-                    animationDelay: `${index * 200}ms`
-                  }}
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className={`w-12 h-12 rounded-lg ${achievement.bgColor} flex items-center justify-center flex-shrink-0`}>
-                      <IconComponent className={`w-6 h-6 ${achievement.color}`} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-gray-900 dark:text-white mb-2">
-                        {achievement.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {achievement.description}
-                      </p>
-                    </div>
-                  </div>
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-24">
+          {achievements.map((achievement, index) => {
+            const IconComponent = achievement.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="group flex flex-col items-start"
+              >
+                <div className="w-12 h-12 rounded-full border border-dark/10 flex items-center justify-center mb-6 text-dark group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-colors">
+                  <IconComponent className="w-5 h-5" />
                 </div>
-              );
-            })}
-          </div>
+                <h3 className="font-serif font-bold text-xl sm:text-2xl text-dark mb-4 group-hover:text-primary transition-colors">
+                  {achievement.title}
+                </h3>
+                <p className="text-dark/70 font-sans leading-relaxed text-sm">
+                  {achievement.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

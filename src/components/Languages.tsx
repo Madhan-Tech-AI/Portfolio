@@ -1,83 +1,74 @@
 import React from 'react';
 import { Globe } from 'lucide-react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
 
 const languages = [
   {
     name: 'English',
-    proficiency: 'Fluent',
+    proficiency: 'Professional Working Proficiency',
     level: 90
   },
   {
     name: 'Tamil',
-    proficiency: 'Native',
+    proficiency: 'Native or Bilingual Proficiency',
     level: 100
   }
 ];
 
 const Languages: React.FC = () => {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
-    <section className="py-12 bg-gray-50 dark:bg-gray-800">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          ref={ref}
-          className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
+    <section className="py-20 bg-light border-y border-dark/5">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-100px" }}
+           className="mb-16"
         >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Languages
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-indigo-600 to-teal-600 mx-auto rounded-full"></div>
-          </div>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-dark tracking-tight leading-none mb-6">
+            Linguistics<span className="text-primary">.</span>
+          </h2>
+          <div className="w-12 h-px bg-primary/40"></div>
+        </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {languages.map((language, index) => (
-              <div
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-24">
+          {languages.map((language, index) => (
+              <motion.div
                 key={index}
-                className={`
-                  bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm hover:shadow-lg
-                  transform transition-all duration-300 hover:-translate-y-1
-                  animate-fade-in-up
-                `}
-                style={{
-                  animationDelay: `${index * 200}ms`
-                }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="group flex flex-col"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center">
-                      <Globe className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-gray-900 dark:text-white">
-                        {language.name}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {language.proficiency}
-                      </p>
-                    </div>
+                <div className="flex items-end justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <Globe className="w-4 h-4 text-primary" />
+                    <h3 className="font-serif font-bold text-xl sm:text-2xl text-dark">
+                      {language.name}
+                    </h3>
                   </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
-                      {language.level}%
-                    </div>
-                  </div>
+                  <span className="text-xs font-sans uppercase tracking-[0.1em] text-dark/70 font-bold">
+                    {language.level}%
+                  </span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div
-                    className="h-2 bg-gradient-to-r from-indigo-600 to-teal-600 rounded-full transition-all duration-1000"
-                    style={{
-                      width: isVisible ? `${language.level}%` : '0%'
-                    }}
-                  ></div>
+                
+                <p className="text-dark/50 text-xs font-sans uppercase tracking-[0.1em] mb-6 block">
+                  {language.proficiency}
+                </p>
+
+                <div className="w-full bg-dark/5 rounded-full h-px relative">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${language.level}%` }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-0 left-0 h-px bg-primary"
+                  />
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
         </div>
       </div>
     </section>

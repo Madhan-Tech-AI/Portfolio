@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React from 'react';
+import { motion } from 'framer-motion';
+import SectionDivider from './SectionDivider';
 
 interface Skill {
   name: string;
@@ -14,8 +15,8 @@ const skills: Skill[] = [
   { name: 'AI Tools', category: 'technical' },
   { name: 'AWS Elastic Beanstalk', category: 'technical' },
   { name: 'Angular (Basics)', category: 'technical' },
-  { name: 'Agile & Waterfall Methodologies', category: 'technical' },
-  { name: 'Software Development Lifecycle (SDLC) & QA', category: 'technical' },
+  { name: 'Agile Methodologies', category: 'technical' },
+  { name: 'SDLC & QA', category: 'technical' },
   { name: 'Algorithmic Thinking', category: 'technical' },
   { name: 'Problem-solving', category: 'soft' },
   { name: 'Technical Communication', category: 'soft' },
@@ -29,84 +30,54 @@ interface SkillsProps {
 }
 
 const Skills: React.FC<SkillsProps> = ({ onSkillClick, selectedSkills = [] }) => {
-  const { ref, isVisible } = useScrollAnimation();
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
   const technicalSkills = skills.filter(skill => skill.category === 'technical');
   const softSkills = skills.filter(skill => skill.category === 'soft');
 
-  const handleSkillClick = (skillName: string) => {
-    if (onSkillClick) {
-      onSkillClick(skillName);
-    }
-  };
-
   const SkillTag: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => {
     const isSelected = selectedSkills.includes(skill.name);
-    const isHovered = hoveredSkill === skill.name;
 
     return (
-      <button
-        onClick={() => handleSkillClick(skill.name)}
-        onMouseEnter={() => setHoveredSkill(skill.name)}
-        onMouseLeave={() => setHoveredSkill(null)}
-        className={`
-          inline-flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium
-          transition-all duration-300 transform hover:scale-105 hover:-translate-y-1
-          animate-fade-in-up cursor-pointer
-          ${skill.category === 'technical'
-            ? isSelected
-              ? 'bg-indigo-600 text-white shadow-lg'
-              : 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-200 dark:hover:bg-indigo-900/50'
-            : isSelected
-            ? 'bg-teal-600 text-white shadow-lg'
-            : 'bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 hover:bg-teal-200 dark:hover:bg-teal-900/50'
-          }
-          ${isHovered ? 'shadow-lg' : 'shadow-md'}
+      <motion.button
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.05, duration: 0.4 }}
+        onClick={() => onSkillClick && onSkillClick(skill.name)}
+        className={`px-5 py-3 rounded-full text-sm font-sans border transition-all duration-300
+          ${isSelected 
+            ? 'bg-primary border-primary text-white' 
+            : 'bg-transparent border-dark/20 text-dark/70 hover:border-primary hover:text-primary'}
         `}
-        style={{
-          animationDelay: `${index * 100}ms`
-        }}
-        aria-label={`Filter projects by ${skill.name}`}
       >
-        <span className={`
-          w-2 h-2 rounded-full mr-1 sm:mr-2 transition-all duration-300
-          ${skill.category === 'technical'
-            ? isSelected ? 'bg-white' : 'bg-indigo-500 dark:bg-indigo-400'
-            : isSelected ? 'bg-white' : 'bg-teal-500 dark:bg-teal-400'
-          }
-          ${isHovered ? 'animate-pulse' : ''}
-        `}></span>
         {skill.name}
-      </button>
+      </motion.button>
     );
   };
 
   return (
-    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          ref={ref}
-          className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
+    <section id="skills" className="bg-light relative pb-20 lg:pb-32">
+      <SectionDivider number="02" title="Technical Arsenal" />
+      
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-100px" }}
+           className="mb-16 lg:mb-20 text-center sm:text-left"
         >
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Skills & Expertise
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-indigo-600 to-teal-600 mx-auto rounded-full mb-6"></div>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4">
-              Click on any skill to filter projects that use that technology or expertise
-            </p>
-          </div>
+          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-dark tracking-tight leading-none mb-4">
+            Capabilities<span className="text-primary">.</span>
+          </h2>
+          <div className="w-12 h-px bg-primary/40 mx-auto sm:mx-0"></div>
+        </motion.div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
           {/* Technical Skills */}
-          <div className="mb-12">
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center px-4">
-              Technical Skills
+          <div>
+            <h3 className="text-xs font-sans uppercase tracking-[0.2em] font-semibold text-primary mb-8 border-b border-dark/10 pb-4">
+              Technical Stack
             </h3>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 px-4">
+            <div className="flex flex-wrap gap-3">
               {technicalSkills.map((skill, index) => (
                 <SkillTag key={skill.name} skill={skill} index={index} />
               ))}
@@ -115,12 +86,12 @@ const Skills: React.FC<SkillsProps> = ({ onSkillClick, selectedSkills = [] }) =>
 
           {/* Soft Skills */}
           <div>
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center px-4">
-              Soft Skills
+            <h3 className="text-xs font-sans uppercase tracking-[0.2em] font-semibold text-primary mb-8 border-b border-dark/10 pb-4">
+              Professional Skills
             </h3>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 px-4">
+            <div className="flex flex-wrap gap-3">
               {softSkills.map((skill, index) => (
-                <SkillTag key={skill.name} skill={skill} index={index + technicalSkills.length} />
+                <SkillTag key={skill.name} skill={skill} index={index} />
               ))}
             </div>
           </div>

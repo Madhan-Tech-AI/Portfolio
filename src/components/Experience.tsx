@@ -1,6 +1,6 @@
 import React from 'react';
-import { Calendar, MapPin, Building, Briefcase } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SectionDivider from './SectionDivider';
 
 const experiences = [
   {
@@ -11,8 +11,7 @@ const experiences = [
     responsibilities: [
       'Spearheading the development of AI-driven products and full-stack solutions.',
       'Designing scalable architectures and automating workflows to enhance efficiency.',
-      'Contributing to technical innovation and product strategy in a fast-paced environment.',
-      'Implementing advanced AI features and optimizing user experience.'
+      'Contributing to technical innovation and product strategy in a fast-paced environment.'
     ],
     current: true
   },
@@ -22,33 +21,31 @@ const experiences = [
     period: 'Jan 2024 – Present',
     location: 'Chennai',
     responsibilities: [
-      'Delivered client websites, web apps, and portfolios with React, Node.js, Firebase, and Tailwind',
-      'Led EVE platform with interactive UI and progress tracking',
-      'Built scalable, performance-optimized solutions'
+      'Delivered client websites, web apps, and portfolios with React, Node.js, and Tailwind.',
+      'Led internal platforms with interactive UI and progress tracking systems.',
+      'Built scalable, performance-optimized digital solutions.'
     ],
-    current: false
+    current: true
   },
   {
-    title: 'Intern',
-    company: 'Xenovex Technologies Pvt. Ltd.',
-    period: 'Jul 3, 2025 – Jul 24, 2025',
-    location: 'Ekkatuthangal, Chennai',
+    title: 'Software Intern',
+    company: 'Xenovex Technologies',
+    period: 'Jul 2025 – Jul 2025',
+    location: 'Chennai',
     responsibilities: [
-      'Learned and applied basics of HTML, CSS, and Java',
-      'Introduced to JavaScript fundamentals including functions, mapping, filtering, and essential features',
-      'Gained an overview of Angular framework and navigation techniques',
-      'Developed a portfolio website application with a login screen, dashboard, and content management page'
+      'Developed a portfolio application with authentication and content management features.',
+      'Gained applied experience with Angular frameworks and system architecture.'
     ],
     current: false
   },
   {
-    title: 'Intern',
-    company: 'Thirumoolar IT Solutions Pvt Ltd',
+    title: 'AI Intern',
+    company: 'Thirumoolar IT Solutions',
     period: 'Mar 2025 – May 2025',
     location: 'Remote',
     responsibilities: [
-      'Built ML models for classification & prediction using Python and Scikit-learn',
-      'Worked on NLP & Computer Vision tasks like text classification and object detection'
+      'Built ML models for classification & prediction using Python and Scikit-learn.',
+      'Focused heavily on NLP and Computer Vision tasks like token classification.'
     ],
     current: false
   }
@@ -56,93 +53,77 @@ const experiences = [
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience" className="py-20 bg-light dark:bg-dark relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-dark dark:text-white mb-4">
-            Professional Experience
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
-        </motion.div>
-
-        <div className="space-y-12 relative">
-          {/* Timeline Line */}
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700 hidden sm:block"></div>
-
-          {experiences.map((exp, index) => (
+    <section id="experience" className="bg-light relative pb-20 lg:pb-32">
+      <SectionDivider number="04" title="Professional Experience" />
+      
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-32">
+          {/* Header Column */}
+          <div className="lg:w-1/3">
             <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="relative pl-0 sm:pl-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="sticky top-32"
             >
-              {/* Timeline Dot */}
-              <div className="absolute left-0 top-0 w-8 h-8 rounded-full border-4 border-white dark:border-dark bg-primary hidden sm:flex items-center justify-center shadow-md z-10">
-                <Briefcase className="w-3 h-3 text-white" />
-              </div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-dark tracking-tight leading-none mb-6">
+                Professional<br/>
+                <span className="text-primary italic">Journey.</span>
+              </h2>
+              <div className="w-12 h-px bg-primary/40 mb-8"></div>
+              <p className="text-dark/60 font-sans text-sm leading-relaxed max-w-xs">
+                A timeline of my professional roles, combining engineering logic with strategic business value.
+              </p>
+            </motion.div>
+          </div>
 
-              <div
-                className={`
-                  relative bg-white dark:bg-dark-light p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800
-                  transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group
-                  ${exp.current ? 'ring-2 ring-primary/20' : ''}
-                `}
+          {/* List Column */}
+          <div className="lg:w-2/3 flex flex-col pt-4">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group relative border-b border-dark/10 pb-16 mb-16 last:mb-0 last:border-b-0"
               >
-                {exp.current && (
-                  <div className="absolute top-4 right-4">
-                    <span className="flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-dark dark:text-white mb-2 group-hover:text-primary transition-colors">
-                      {exp.title}
+                
+                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-8">
+                  <div className="flex items-center gap-4 mb-2 md:mb-0">
+                    <h3 className="text-2xl sm:text-3xl font-serif font-bold text-dark group-hover:text-primary transition-colors">
+                      {exp.company}
                     </h3>
-                    <div className="flex items-center space-x-2 text-primary mb-2">
-                      <Building className="w-5 h-5" />
-                      <span className="font-semibold">{exp.company}</span>
-                    </div>
+                    {exp.current && (
+                      <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-sans font-bold uppercase tracking-wider rounded-full">
+                        Current
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="flex flex-col md:items-end">
+                    <span className="text-dark font-sans font-medium">{exp.title}</span>
+                    <span className="text-dark/40 font-sans text-xs uppercase tracking-wider mt-1">{exp.period}</span>
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 mb-6 text-sm text-gray-500 dark:text-gray-400">
-                  <div className="flex items-center space-x-2 mb-2 sm:mb-0 bg-gray-50 dark:bg-gray-800/50 px-3 py-1 rounded-full">
-                    <Calendar className="w-4 h-4" />
-                    <span>{exp.period}</span>
-                  </div>
-                  <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800/50 px-3 py-1 rounded-full">
-                    <MapPin className="w-4 h-4" />
-                    <span>{exp.location}</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-3">
-                  {exp.responsibilities.map((responsibility, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start space-x-3 text-gray-700 dark:text-gray-300"
-                    >
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2.5 flex-shrink-0"></div>
-                      <span className="leading-relaxed">{responsibility}</span>
+                <ul className="space-y-4">
+                  {exp.responsibilities.map((req, idx) => (
+                    <li key={idx} className="flex items-start gap-4 text-dark/70 font-sans text-sm sm:text-base leading-relaxed max-w-2xl">
+                      <span className="text-primary mt-1.5 opacity-50 text-xs">◆</span>
+                      {req}
                     </li>
                   ))}
                 </ul>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Subtle Hover Reveal line */}
+                <div className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-700 group-hover:w-full"></div>
+              </motion.div>
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );

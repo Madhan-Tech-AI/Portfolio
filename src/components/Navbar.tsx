@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Download, Moon, Sun } from 'lucide-react';
+import { Download, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { SketchyNav } from './SketchyNav';
 
 interface NavbarProps {
     activeSection: string;
@@ -10,35 +11,10 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isDark, setIsDark] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/';
-
-    // Theme toggle logic
-    useEffect(() => {
-        // Check system preference or local storage
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            setIsDark(true);
-            document.documentElement.classList.add('dark');
-        } else {
-            setIsDark(false);
-            document.documentElement.classList.remove('dark');
-        }
-    }, []);
-
-    const toggleTheme = () => {
-        if (isDark) {
-            document.documentElement.classList.remove('dark');
-            localStorage.theme = 'light';
-            setIsDark(false);
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.theme = 'dark';
-            setIsDark(true);
-        }
-    };
 
     // Scroll effect
     useEffect(() => {
@@ -50,13 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     }, []);
 
     const navItems = [
-        { id: 'about', label: 'About' },
-        { id: 'skills', label: 'Skills' },
-        { id: 'projects', label: 'Projects' },
-        { id: 'experience', label: 'Experience' },
-        { id: 'education', label: 'Education' },
-        { id: 'certifications', label: 'Gallery' },
-        { id: 'contact', label: 'Contact' }
+        { id: 'about', name: 'About' },
+        { id: 'skills', name: 'Skills' },
+        { id: 'projects', name: 'Projects' },
+        { id: 'experience', name: 'Experience' },
+        { id: 'education', name: 'Education' },
+        { id: 'certifications', name: 'Gallery' },
+        { id: 'contact', name: 'Contact' }
     ];
 
     const handleNavigation = (id: string) => {
@@ -65,13 +41,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         } else {
-            // Fallback for home page navigation logic if we were on another page, 
-            // but now we are single page so this is simple
             navigate('/', { state: { scrollTo: id } });
         }
     };
-
-    // navigateToGallery removed as it is now part of navItems for scrolling
 
     // Handle cross-page scrolling
     useEffect(() => {
@@ -98,74 +70,59 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
         <motion.header
             initial={{ y: -100 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                ? 'bg-white/80 dark:bg-dark/80 backdrop-blur-md shadow-md py-2'
-                : 'bg-transparent py-4'
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+                ? 'bg-light/90 backdrop-blur-xl border-b border-dark/5 py-4'
+                : 'bg-transparent py-6'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <div
-                        className="flex items-center space-x-2 font-bold text-xl text-primary cursor-pointer hover:text-primary-hover transition-colors"
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="cursor-pointer flex items-center justify-center transition-all duration-300"
                         onClick={() => handleNavigation('hero')}
                     >
-                        <span className="text-2xl">MKP</span>
+                        <img 
+                            src="/Fashions (4).png" 
+                            alt="Logo" 
+                            className="h-10 md:h-12 w-auto object-contain" 
+                        />
+                    </motion.div>
+
+                    {/* Desktop Navigation - SketchyNav */}
+                    <div className="hidden lg:flex items-center">
+                        <SketchyNav
+                            items={navItems}
+                            activeTab={activeSection}
+                            onNavigate={handleNavigation}
+                            isScrolled={true} // Forced true because bg is light 
+                        />
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden lg:flex items-center space-x-6">
-                        {navItems.map((item) => (
-                            <button
-                                key={item.id}
-                                onClick={() => handleNavigation(item.id)}
-                                className={`text-sm font-medium transition-colors hover:text-primary relative group ${activeSection === item.id
-                                    ? 'text-primary'
-                                    : 'text-gray-600 dark:text-gray-300'
-                                    }`}
-                            >
-                                {item.label}
-                                <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${activeSection === item.id ? 'w-full' : 'w-0 group-hover:w-full'
-                                    }`}></span>
-                            </button>
-                        ))}
-                    </nav>
-
-                    {/* Desktop Actions */}
-                    <div className="hidden lg:flex items-center space-x-4">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
-                            aria-label="Toggle theme"
-                        >
-                            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                        </button>
-
-                        <button
+                    {/* Desktop Resume Button */}
+                    <div className="hidden lg:flex items-center">
+                        <motion.button
+                            whileHover={{ scale: 1.03, y: -1 }}
+                            whileTap={{ scale: 0.97 }}
                             onClick={handleResumeDownload}
-                            className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5"
+                            className="flex items-center space-x-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 bg-primary/10 text-primary hover:bg-primary hover:text-white border border-primary/20"
                         >
                             <Download className="w-4 h-4" />
-                            <span className="text-sm font-medium">Resume</span>
-                        </button>
+                            <span>Resume</span>
+                        </motion.button>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="lg:hidden flex items-center space-x-4">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
-                        >
-                            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                        </button>
-
+                    <div className="lg:hidden flex items-center">
                         <button
                             onClick={() => setIsMenuOpen(true)}
-                            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
+                            className="p-2.5 rounded-full bg-primary/5 text-primary hover:bg-primary/10 transition-colors"
                             aria-label="Open menu"
                         >
-                            <Menu className="w-6 h-6" />
+                            <Menu className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
@@ -180,47 +137,49 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsMenuOpen(false)}
-                            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+                            className="fixed inset-0 bg-dark/20 backdrop-blur-sm z-40 lg:hidden"
                         />
                         <motion.div
                             initial={{ x: '100%' }}
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed top-0 right-0 bottom-0 w-3/4 max-w-xs bg-white dark:bg-dark-light z-50 shadow-2xl lg:hidden flex flex-col"
+                            transition={{ type: "spring", damping: 28, stiffness: 250 }}
+                            className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-light z-50 shadow-2xl lg:hidden flex flex-col"
                         >
-                            <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
-                                <span className="font-bold text-xl text-primary">Menu</span>
+                            <div className="p-6 flex items-center justify-between border-b border-dark/5">
+                                <span className="font-serif text-2xl font-bold text-dark">
+                                    Menu<span className="text-primary italic">.</span>
+                                </span>
                                 <button
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300"
+                                    className="p-2 rounded-full hover:bg-dark/5 text-dark/50 transition-colors"
                                 >
-                                    <X className="w-6 h-6" />
+                                    <X className="w-5 h-5" />
                                 </button>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto py-4 px-4 space-y-2">
+                            <div className="flex-1 overflow-y-auto py-8 px-6 space-y-2">
                                 {navItems.map((item) => (
                                     <button
                                         key={item.id}
                                         onClick={() => handleNavigation(item.id)}
-                                        className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isHomePage && activeSection === item.id
-                                            ? 'bg-primary/10 text-primary'
-                                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                                        className={`w-full text-left px-5 py-4 rounded-2xl text-lg transition-all duration-200 ${isHomePage && activeSection === item.id
+                                            ? 'bg-primary/5 text-primary font-medium'
+                                            : 'text-dark/70 hover:bg-dark/5 hover:text-dark'
                                             }`}
                                     >
-                                        {item.label}
+                                        {item.name}
                                     </button>
                                 ))}
                             </div>
 
-                            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                            <div className="p-6 border-t border-dark/5">
                                 <button
                                     onClick={handleResumeDownload}
-                                    className="flex items-center justify-center space-x-2 w-full px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
+                                    className="flex items-center justify-center space-x-2 w-full px-4 py-4 bg-primary text-white rounded-2xl hover:bg-primary-hover transition-colors font-medium shadow-lg shadow-primary/20"
                                 >
-                                    <Download className="w-4 h-4" />
-                                    <span className="text-sm font-medium">Download Resume</span>
+                                    <Download className="w-5 h-5" />
+                                    <span>Download Resume</span>
                                 </button>
                             </div>
                         </motion.div>

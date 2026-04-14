@@ -28,36 +28,36 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, imageSrc, quote, 
 
                 {/* Modal Content */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                    className="relative bg-white dark:bg-dark-light rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
+                    className="relative bg-light rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border border-dark/10"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-100 dark:border-gray-800">
-                        <h3 className="text-xl font-bold text-dark dark:text-white line-clamp-1 pr-4">
+                    <div className="flex items-center justify-between p-6 sm:p-8 border-b border-dark/5">
+                        <h3 className="text-2xl font-serif font-bold text-dark line-clamp-1 pr-4">
                             {title}
                         </h3>
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                            className="p-2 rounded-full bg-dark/5 text-dark/50 hover:bg-dark/10 transition-colors"
                         >
                             <X className="w-5 h-5" />
                         </button>
                     </div>
 
                     {/* Body */}
-                    <div className="p-6 overflow-y-auto flex-1">
+                    <div className="p-6 sm:p-8 overflow-y-auto flex-1 custom-scrollbar">
                         {quote && (
-                            <div className="mb-6 bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
-                                <p className="text-gray-700 dark:text-gray-300 italic">"{quote}"</p>
+                            <div className="mb-8 border-l-2 border-primary pl-6 py-2">
+                                <p className="text-dark/70 font-serif italic text-lg leading-relaxed">"{quote}"</p>
                             </div>
                         )}
 
                         {imageSrc ? (
-                            <div className="w-full h-full min-h-[300px] flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden">
+                            <div className="w-full h-full min-h-[300px] flex items-center justify-center rounded-xl overflow-hidden">
                                 <img
                                     src={imageSrc}
                                     alt={title}

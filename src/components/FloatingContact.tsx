@@ -47,11 +47,11 @@ const FloatingContact: React.FC = () => {
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -10 }}
-                                    className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white dark:bg-dark-light text-dark dark:text-white px-3 py-1.5 rounded-lg shadow-lg text-sm font-medium whitespace-nowrap border border-gray-100 dark:border-gray-700"
+                                    className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white text-dark px-3 py-1.5 rounded-lg shadow-lg text-sm font-medium whitespace-nowrap border border-gray-100"
                                 >
                                     Let's Talk!
                                     {/* Arrow */}
-                                    <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-white dark:bg-dark-light transform rotate-45 border-t border-r border-gray-100 dark:border-gray-700"></div>
+                                    <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-white transform rotate-45 border-t border-r border-gray-100"></div>
                                 </motion.div>
                             )}
                         </AnimatePresence>

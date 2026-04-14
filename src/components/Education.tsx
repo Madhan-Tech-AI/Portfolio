@@ -1,17 +1,17 @@
 import React from 'react';
-import { GraduationCap, Calendar } from 'lucide-react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
+import SectionDivider from './SectionDivider';
 
 const education = [
   {
     degree: 'B.Tech – Artificial Intelligence & Data Science',
     institution: 'Gojan School of Business and Technology',
     period: '2023 – Present',
-    status: 'In Progress',
+    grade: '',
     current: true
   },
   {
-    degree: 'HSC – Higher Secondary Education',
+    degree: 'Higher Secondary Education',
     institution: 'Good Shepherd Matriculation Higher Secondary School',
     period: '2022 – 2023',
     grade: '75%',
@@ -20,91 +20,75 @@ const education = [
 ];
 
 const Education: React.FC = () => {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
-    <section id="education" className="py-20 bg-white dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          ref={ref}
-          className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
-        >
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Education
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-indigo-600 to-teal-600 mx-auto rounded-full"></div>
+    <section id="education" className="bg-light relative pb-20 lg:pb-32">
+      <SectionDivider number="05" title="Academic Foundation" />
+      
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        
+        <div className="flex flex-col lg:flex-row-reverse gap-16 lg:gap-32">
+          {/* Header Column */}
+          <div className="lg:w-1/3">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="sticky top-32 lg:text-right"
+            >
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-dark tracking-tight leading-none mb-6">
+                Academic<br/>
+                <span className="text-primary italic">Foundation.</span>
+              </h2>
+              <div className="w-12 h-px bg-primary/40 mb-8 lg:ml-auto"></div>
+              <p className="text-dark/60 font-sans text-sm leading-relaxed max-w-xs lg:ml-auto">
+                Continuous learning shapes the core logic behind intelligent systems and effective engineering.
+              </p>
+            </motion.div>
           </div>
 
-          <div className="space-y-6">
+          {/* List Column */}
+          <div className="lg:w-2/3 flex flex-col pt-4">
             {education.map((edu, index) => (
-              <div
+              <motion.div
                 key={index}
-                className={`
-                  bg-gray-50 dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg
-                  transform transition-all duration-300 hover:-translate-y-1
-                  animate-fade-in-up border-l-4
-                  ${edu.current 
-                    ? 'border-l-indigo-600' 
-                    : 'border-l-teal-600'
-                  }
-                `}
-                style={{
-                  animationDelay: `${index * 200}ms`
-                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group relative border-b border-dark/10 pb-12 mb-12 last:mb-0 last:border-b-0"
               >
-                <div className="flex items-start space-x-4">
-                  <div className={`
-                    w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0
-                    ${edu.current 
-                      ? 'bg-indigo-100 dark:bg-indigo-900' 
-                      : 'bg-teal-100 dark:bg-teal-900'
-                    }
-                  `}>
-                    <GraduationCap className={`
-                      w-6 h-6
-                      ${edu.current 
-                        ? 'text-indigo-600 dark:text-indigo-400' 
-                        : 'text-teal-600 dark:text-teal-400'
-                      }
-                    `} />
+                
+                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
+                  <div className="flex items-center gap-4 mb-2 md:mb-0">
+                    <h3 className="text-2xl sm:text-3xl font-serif font-bold text-dark group-hover:text-primary transition-colors max-w-lg">
+                      {edu.degree}
+                    </h3>
                   </div>
-
-                  <div className="flex-1">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                        {edu.degree}
-                      </h3>
-                      {edu.current && (
-                        <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 text-sm rounded-full mt-2 sm:mt-0">
-                          In Progress
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="text-gray-700 dark:text-gray-300 font-medium mb-3">
-                      {edu.institution}
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-sm text-gray-600 dark:text-gray-400">
-                      <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-                        <Calendar className="w-4 h-4" />
-                        <span>{edu.period}</span>
-                      </div>
-                      {edu.grade && (
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium">Grade: {edu.grade}</span>
-                        </div>
-                      )}
-                    </div>
+                  
+                  <div className="flex flex-col md:items-end flex-shrink-0 mt-4 md:mt-0">
+                    <span className="text-dark/40 font-sans text-xs uppercase tracking-wider">{edu.period}</span>
+                    {edu.current && (
+                      <span className="mt-2 px-3 py-1 bg-primary/10 text-primary text-[10px] font-sans font-bold uppercase tracking-wider rounded-full">
+                        In Progress
+                      </span>
+                    )}
                   </div>
                 </div>
-              </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-dark/70 font-sans font-medium text-lg">{edu.institution}</span>
+                  {edu.grade && (
+                    <span className="text-primary font-serif font-bold tracking-tight text-xl">{edu.grade}</span>
+                  )}
+                </div>
+
+                {/* Subtle Hover Reveal line */}
+                <div className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-700 group-hover:w-full"></div>
+              </motion.div>
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );

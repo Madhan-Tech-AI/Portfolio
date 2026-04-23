@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Github, Linkedin, ArrowRight } from 'lucide-react';
+import { Github, Linkedin, Instagram, ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import AnimatedText from './AnimatedText';
 
@@ -45,9 +45,10 @@ const Hero: React.FC = () => {
       >
         <img
           src="/IMG_9561.JPG"
-          alt="Madhan Kumar P."
+          alt="Madhan Kumar P — AI & Full Stack Developer, Chennai, India"
           className="w-full h-full object-cover object-[center_30%] mt-10 md:mt-0 grayscale"
           loading="eager"
+          itemProp="image"
         />
         {/* Lighter Gradient Overlay to make the background much more visible */}
         <div className="absolute inset-0 bg-gradient-to-t from-light via-light/20 to-transparent"></div>
@@ -68,6 +69,7 @@ const Hero: React.FC = () => {
               transition={{ delay: 0.8, duration: 1, ease: 'easeOut' }}
               className="text-[12vw] sm:text-[10vw] lg:text-[7.5rem] font-bold text-dark leading-[1] tracking-tight drop-shadow-sm pointer-events-auto"
               style={{ fontFamily: "'Segant', serif" }}
+              itemProp="name"
             >
               Madhan Kumar P.
             </motion.h1>
@@ -113,13 +115,43 @@ const Hero: React.FC = () => {
             transition={{ delay: 1.5, duration: 0.8 }}
             className="flex flex-wrap items-center gap-4 lg:justify-end"
           >
-            <a href="https://www.linkedin.com/in/madhan-kumar-p-759402324/" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-light/80 text-dark hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm">
+            <a
+              href="https://www.linkedin.com/in/madhan-kumar-p-759402324/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Madhan Kumar P on LinkedIn"
+              title="Madhan Kumar P — LinkedIn Profile"
+              className="p-4 rounded-full bg-light/80 text-dark hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm"
+            >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="https://github.com/Madhan-Tech-AI" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-light/80 text-dark hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm">
+            <a
+              href="https://github.com/Madhan-Tech-AI"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Madhan Kumar P on GitHub"
+              title="Madhan Tech AI — GitHub"
+              className="p-4 rounded-full bg-light/80 text-dark hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm"
+            >
               <Github className="w-5 h-5" />
             </a>
-            <a href="https://drive.google.com/file/d/1DPBQCYdAfiemVt1XUWx1al7ILwrUn26a/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 px-8 py-4 bg-dark text-white hover:bg-primary transition-all duration-300 rounded-full font-serif font-medium text-sm tracking-wide shadow-xl">
+            <a
+              href="https://www.instagram.com/_iam_maddy._/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Madhan Kumar P on Instagram — @_iam_maddy._"
+              title="Maddy on Instagram — @_iam_maddy._"
+              className="p-4 rounded-full bg-light/80 text-dark hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a
+              href="https://drive.google.com/file/d/1DPBQCYdAfiemVt1XUWx1al7ILwrUn26a/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Madhan Kumar P Resume"
+              className="group flex items-center gap-3 px-8 py-4 bg-dark text-white hover:bg-primary transition-all duration-300 rounded-full font-serif font-medium text-sm tracking-wide shadow-xl"
+            >
               Explore Resume
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </a>

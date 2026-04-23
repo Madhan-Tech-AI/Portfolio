@@ -1,11 +1,42 @@
-# robots.txt — madddy.me
-# Madhan Kumar P | AI & Full Stack Developer | Chennai, India
+﻿# robots.txt — www.madddy.me
+# Madhan Kumar P (Maddy / RJ Maddy) | AI & Full Stack Developer | Chennai, India
 
+# Allow all bots — this is a fully public personal portfolio
 User-agent: *
 Allow: /
-
-# Block nothing — personal portfolio, fully public
 Disallow:
 
-# Sitemap location
-Sitemap: https://madddy.me/sitemap.xml
+# Google crawlers
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing AI
+User-agent: Bingbot
+Allow: /
+
+# ChatGPT / OpenAI crawler
+User-agent: GPTBot
+Allow: /
+
+# Claude / Anthropic crawler
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# Google Gemini AI crawler
+User-agent: Google-Extended
+Allow: /
+
+# Meta AI crawler
+User-agent: FacebookBot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+# Sitemap location (matches Google Search Console property)
+Sitemap: https://www.madddy.me/sitemap.xml

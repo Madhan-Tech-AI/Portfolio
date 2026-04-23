@@ -1,0 +1,11 @@
+# robots.txt — madddy.me
+# Madhan Kumar P | AI & Full Stack Developer | Chennai, India
+
+User-agent: *
+Allow: /
+
+# Block nothing — personal portfolio, fully public
+Disallow:
+
+# Sitemap location
+Sitemap: https://madddy.me/sitemap.xml

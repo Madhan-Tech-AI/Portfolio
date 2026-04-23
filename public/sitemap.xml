@@ -6,25 +6,95 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- Madhan Kumar P (Maddy / RJ Maddy) | AI & Full Stack Developer | Chennai -->
-  <!-- Domain: www.madddy.me — matches Google Search Console property -->
+  <!--
+    Madhan Kumar P (Maddy / RJ Maddy) | AI & Full Stack Developer | Chennai
+    Domain: www.madddy.me — matches Google Search Console property
+    Images: All local photos + references to LinkedIn & Instagram profiles
+    NOTE: .CR3 (Canon RAW) is excluded — not web-indexable
+  -->
 
+  <!-- ══ HOMEPAGE — All profile images submitted for Google Images indexing ══ -->
   <url>
     <loc>https://www.madddy.me/</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+
+    <!-- OG Preview Image (used for social sharing & Google rich results) -->
     <image:image>
-      <image:loc>https://www.madddy.me/og-image.jpg</image:loc>
-      <image:title>Madhan Kumar P — AI &amp; Full Stack Developer, Chennai</image:title>
-      <image:caption>Madhan Kumar P (Maddy / RJ Maddy) — AI &amp; Full Stack Developer from Chennai, India</image:caption>
+      <image:loc>https://www.madddy.me/og-image.JPG</image:loc>
+      <image:title>Madhan Kumar P — AI &amp; Full Stack Developer | Chennai</image:title>
+      <image:caption>Madhan Kumar P (Maddy / RJ Maddy) — AI &amp; Full Stack Developer from Chennai, India. Works at UNAI TECH.</image:caption>
     </image:image>
+
+    <!-- Hero portrait used on site -->
     <image:image>
       <image:loc>https://www.madddy.me/IMG_9561.JPG</image:loc>
-      <image:title>Madhan Kumar P portrait photo</image:title>
-      <image:caption>Madhan Kumar P — professional portrait, AI &amp; Full Stack Developer</image:caption>
+      <image:title>Madhan Kumar P — official portfolio photo</image:title>
+      <image:caption>Madhan Kumar P (Maddy) — AI &amp; Full Stack Developer, Chennai. Photo from personal collection.</image:caption>
+    </image:image>
+
+    <!-- IMG_9325 -->
+    <image:image>
+      <image:loc>https://www.madddy.me/IMG_9325.JPG</image:loc>
+      <image:title>Madhan Kumar P photo — IMG_9325</image:title>
+      <image:caption>Madhan Kumar P (RJ Maddy) — Chennai, Tamil Nadu, India</image:caption>
+    </image:image>
+
+    <!-- IMG_9885 -->
+    <image:image>
+      <image:loc>https://www.madddy.me/IMG_9885.JPG</image:loc>
+      <image:title>Madhan Kumar P photo — IMG_9885</image:title>
+      <image:caption>Madhan Kumar P (Maddy) — AI Developer &amp; Full Stack Developer, Chennai</image:caption>
+    </image:image>
+
+    <!-- Madhan.jpeg / madhan-kumar-p-profile.jpeg -->
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-profile.jpeg</image:loc>
+      <image:title>Madhan Kumar P — profile photo</image:title>
+      <image:caption>Madhan Kumar P (Maddy) — professional profile photo, AI &amp; Full Stack Developer at UNAI TECH, Chennai</image:caption>
+    </image:image>
+
+    <!-- Meeee.jpeg / madhan-kumar-p-casual.jpeg -->
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-casual.jpeg</image:loc>
+      <image:title>Madhan Kumar P — casual photo</image:title>
+      <image:caption>Madhan Kumar P (RJ Maddy) — casual photo, AI &amp; Full Stack Developer from Chennai, India</image:caption>
+    </image:image>
+
+    <!-- WhatsApp photos (renamed to SEO-friendly names) -->
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-photo-1.jpeg</image:loc>
+      <image:title>Madhan Kumar P photo 1</image:title>
+      <image:caption>Madhan Kumar P (Maddy) — personal photo, Chennai</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-photo-2.jpeg</image:loc>
+      <image:title>Madhan Kumar P photo 2</image:title>
+      <image:caption>Madhan Kumar P (RJ Maddy) — personal photo, Chennai, Tamil Nadu</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-photo-3.jpeg</image:loc>
+      <image:title>Madhan Kumar P photo 3</image:title>
+      <image:caption>Madhan Kumar P — AI &amp; Full Stack Developer, UNAI TECH, Chennai</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-photo-4.jpeg</image:loc>
+      <image:title>Madhan Kumar P photo 4</image:title>
+      <image:caption>Madhan Kumar P (Maddy) — personal photo</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://www.madddy.me/madhan-kumar-p-photo-5.jpeg</image:loc>
+      <image:title>Madhan Kumar P photo 5</image:title>
+      <image:caption>Madhan Kumar P (RJ Maddy) — personal photo, Chennai</image:caption>
     </image:image>
   </url>
+
+  <!-- ══ SECTION PAGES ══ -->
 
   <url>
     <loc>https://www.madddy.me/#hero</loc>
